@@ -33,6 +33,23 @@ Cables para realizar todas las conexiones entre el reto de componentes.
 
 ## **2. Presupuesto:**
 
+![image](https://github.com/user-attachments/assets/8fdad1a0-0379-4183-9131-6dc0b86094aa)
+
++ **Nuestro proyecto:** 
+Muestra los precios reales pagados por los componentes que compraron.
+Las celdas con una línea diagonal ( / ) indican que no compraron ese componente porque lo obtuvieron prestado del laboratorio.
+
++ **Proyecto externo hipotético:** 
+Muestra cuánto habría costado el proyecto completo si se hubiesen comprado todos los materiales, sin recibir ninguno prestado.
+
++ **Ahorrado:** 
+Indica el dinero que se ahorraron gracias a los materiales prestados. Solo aparece un valor donde hay una línea en la fila "Nuestro proyecto", porque esos son los materiales que no compraron.
+
+
+
+Gracias a los materiales prestados, se ahorraron casi la mitad del presupuesto total. El proyecto les habría costado más del doble (61,25 €), pero solo gastaron 31,5 €.
+
+
 ## **3. Diagrama de bloques:**
 
 ```mermaid
