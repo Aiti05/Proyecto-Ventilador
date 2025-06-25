@@ -41,7 +41,7 @@ Cables para realizar todas las conexiones entre el reto de componentes.
 
 + **Nuestro proyecto:** 
 Muestra los precios reales pagados por los componentes que compraron.
-Las celdas con una línea diagonal ( / ) indican que no compraron ese componente porque lo obtuvieron prestado del laboratorio.
+Las celdas con una línea diagonal ( \ ) indican que no compraron ese componente porque lo obtuvieron prestado del laboratorio.
 
 + **Proyecto externo hipotético:** 
 Muestra cuánto habría costado el proyecto completo si se hubiesen comprado todos los materiales, sin recibir ninguno prestado.
