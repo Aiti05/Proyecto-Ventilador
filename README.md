@@ -202,10 +202,38 @@ En este proyecto trabajamos con un total de tres entradas y cinco salidas físic
 
 Disponemos de dos pulsadores y un sensor AHT10 que mide la temperatura y la humedad del entorno.
 
+```
+I2C_Sensor.begin(16, 17);
+  if (!aht.begin(&I2C_Sensor)) {
+    Serial.println("Error inicializando sensor AHT10");
+  } else {
+    Serial.println("Sensor AHT10 listo.");
+  }
+```
+**`begin(16, 17)`:** configura los pines SDA y SCL del bus I2C.
+
+**`aht.begin(...)`:** inicia el sensor AHT10.
+
+**`Serial.println(...)`:** muestra si la inicialización fue exitosa.
+
 + **Pulsador de control del ventilador:**
 
 Este pulsador funciona únicamente en modo manual. Cada vez que se pulsa, alterna el estado del relé, lo que provoca que el ventilador se encienda o apague. Este comportamiento se basa en un sistema tipo "Switch ON / Switch OFF", donde el estado se mantiene hasta que se vuelva a pulsar el botón.
- 
+
+```
+// Control manual solo si estamos en modo manual
+  if (!modoAutomatico) {
+    if (boton1Presionado && !pulsacion1Procesada) {
+      ventiladorActivo = !ventiladorActivo;
+      pulsacion1Procesada = true;
+    } else if (!boton1Presionado) {
+      pulsacion1Procesada = false;
+    }
+```
+**`ventiladorActivo = !ventiladorActivo;`:** cambia el estado ON/OFF.
+
+**`pulsacion1Procesada`:** evita múltiples activaciones por rebotes del botón.
+
 + **Pulsador de selección de modo:**
 
 Este segundo botón permite cambiar entre modo manual y modo automático.
@@ -219,6 +247,31 @@ Se ha configurado un rango de histéresis:
 -Si baja de 28 °C, el ventilador se apaga automáticamente.
 
 -Entre 28 °C y 30 °C, el ventilador mantiene su estado anterior para evitar ciclos rápidos de encendido y apagado.
+
+```
+ // Alternar modo automático/manual
+  if (boton2Presionado && !pulsacion2Procesada) {
+    modoAutomatico = !modoAutomatico;
+    pulsacion2Procesada = true;
+  } else if (!boton2Presionado) {
+    pulsacion2Procesada = false;
+  }
+
+ // Control automático ventilador
+  if (modoAutomatico) {
+    if (temperatura >= 30.0) {
+      estadoAutomaticoVentilador = true;
+    } else if (temperatura <= 28.0) {
+      estadoAutomaticoVentilador = false;
+    }
+    ventiladorActivo = estadoAutomaticoVentilador;
+  }
+```
+**`modoAutomatico = !modoAutomatico;`:** alterna entre modo manual y automático.
+
+Compara temperatura con los umbrales.
+
+Evita cambios rápidos de estado.
  
 + **LED de control del ventilador:**
 
@@ -228,6 +281,15 @@ Esto sirve como verificación:
 -Si el LED se enciende pero el ventilador no, hay un fallo en el relé o en el hardware del ventilador.
 
 -Si ni el LED ni el ventilador responden, el error es probablemente de programación. Este sistema de comprobación ha facilitado la detección rápida de fallos.
+
+```
+// Actualizar relay y LED1
+  digitalWrite(RELAY1_PIN, ventiladorActivo ? LOW : HIGH);
+  digitalWrite(LED1_PIN, ventiladorActivo);
+```
+**`digitalWrite`:** activa el relé y el LED.
+
+**`LOW`:** enciende el relé (activa el ventilador).
 
 + **Pantalla OLED:**
 
@@ -240,6 +302,59 @@ En la pantalla mostramos en tiempo real:
 -Modo del sistema (MANUAL/AUTOMÁTICO).
 
 -Indicaciones sobre el humidificador.
+
+```
+// Actualizar relay y LED1
+  digitalWrite(RELAY1_PIN, ventiladorActivo ? LOW : HIGH);
+  digitalWrite(LED1_PIN, ventiladorActivo);
+
+Codigo q muestra todo en la OLED:
+ // Mostrar en OLED
+  display.clearDisplay();
+  display.setCursor(0, 0);
+  display.print(modoAutomatico ? "Modo: AUTO" : "Modo: MANUAL");
+  display.setCursor(0, 10);
+  display.print("Vent: ");
+  display.println(ventiladorActivo ? "ON" : "OFF");
+
+  display.print("Temp: ");
+  display.print(temperatura);
+  display.println(" C");
+
+  display.print("Hum: ");
+  display.print(hum);
+  display.println(" %");
+
+  display.println(estadoHumidificadorGlobal);
+  display.display();
+
+  // Mostrar en Serial
+  Serial.println("=== ESTADO DEL SISTEMA ===");
+  Serial.print("Temperatura: ");
+  Serial.print(temperatura);
+  Serial.println(" °C");
+
+  Serial.print("Humedad: ");
+  Serial.print(hum);
+  Serial.println(" %");
+
+  Serial.print("Modo: ");
+  Serial.println(modoAutomatico ? "AUTOMATICO" : "MANUAL");
+
+  Serial.print("Ventilador: ");
+  Serial.println(ventiladorActivo ? "ENCENDIDO" : "APAGADO");
+
+  Serial.print("Humidificador: ");
+  Serial.println(estadoHumidificadorGlobal);
+  Serial.println();
+```
+**`clearDisplay()`:** limpia la pantalla.
+
+**`setCursor(x, y)`:** posiciona el texto.
+
+**`print(...)`:** muestra datos (modo, ventilador, temperatura, humedad).
+
+**`display()`:** actualiza la pantalla.
  
 + **Control del humidificador:**
 
@@ -252,6 +367,24 @@ Por ello, el sistema emite mensajes en pantalla guiando al usuario:
 
 -Si la humedad es excesiva, se pide al usuario que apague el humidificador.
 
+```
+ // Decidir estado del humidificador y LED2
+  if (hum < UMBRAL_HUMEDAD - 2) {
+    estadoHumidificadorGlobal = "Encender humidificador";
+    digitalWrite(LED2_PIN, LOW);
+  } else if (hum > UMBRAL_HUMEDAD + 2) {
+    estadoHumidificadorGlobal = "Apagar humidificador";
+    digitalWrite(LED2_PIN, LOW);
+  } else {
+    estadoHumidificadorGlobal = "Humedad optima";
+    digitalWrite(LED2_PIN, HIGH);
+  }
+```
+**`digitalWrite(LED2_PIN, ...)`:** enciende LED si la humedad es óptima.
+
+Evalúa humedad respecto a un UMBRAL_HUMEDAD.
+
+Muestra mensaje en OLED.
  
 + **Interfaz web:**
 
