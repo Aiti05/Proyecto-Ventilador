@@ -22,7 +22,7 @@ Pantalla donde proyectaremos la temperatura y la humedad que perciba el sensor.
 + **Relé:** 
 Utilizado para poder introducir más energía para el ventilador (12V).
 
-+ **Himudificador:** 
++ **Humidificador:** 
 Humidificador que pondremos sobre base de agua y a partir de ondas ultrasónicas.
 
 + **LED's:** 
