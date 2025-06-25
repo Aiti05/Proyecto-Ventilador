@@ -1,5 +1,9 @@
 ## **Proyecto: Ventilador y Humidificador inteligentes**
 
+Este informe contiene todas las instrucciones necesarias y detalladas para que cualquier persona pueda replicar por sí misma el proyecto de un ventilador y humidificador inteligentes. Está diseñado de forma clara, ordenada y completa, para facilitar tanto el montaje como la comprensión del funcionamiento del sistema, desde la elección de componentes hasta la implementación de la interfaz web de control.
+
+Este proyecto tiene como objetivo automatizar el control de la temperatura y la humedad en un entorno determinado, utilizando una placa ESP32-S3 como cerebro del sistema. Mediante sensores, relés, indicadores LED, pulsadores y una pantalla OLED, el dispositivo puede activar automáticamente un ventilador cuando la temperatura sube demasiado, y recomendar el uso de un humidificador si el nivel de humedad es bajo, todo esto complementado con una interfaz web desde la cual también se puede supervisar y controlar el sistema.
+
 ## **1. Componentes:**
 En este projecto estamos usando un total de nueve componentes diferentes:
 
@@ -643,4 +647,34 @@ Cambia entre modo manual y automático (modoAutomatico = !modoAutomatico).
 En modo manual, cambia el estado del ventilador (ventiladorActivo = !ventiladorActivo).
 
 ## **6. Conclusiones:**
+
++ **Automatización eficiente y versátil:**
+
+El sistema permite operar en dos modos: manual y automático, ofreciendo al usuario flexibilidad en el control del ventilador.
+
+El modo automático aplica lógica de histéresis para evitar ciclos de encendido/apagado frecuentes, mejorando la eficiencia y durabilidad del sistema.
+
++ **Monitoreo ambiental en tiempo real:**
+
+Gracias al sensor AHT10, se obtienen datos precisos de temperatura y humedad, los cuales son mostrados en una pantalla OLED y una interfaz web, facilitando el seguimiento del entorno en todo momento.
+
++ **Control visual mediante LEDs:**
+
+Los LEDs actúan como indicadores visuales inmediatos para diagnosticar el estado del ventilador y del humidificador, permitiendo detectar posibles errores eléctricos o lógicos rápidamente.
+
++ **Integración web intuitiva:**
+
+La página web desarrollada permite consultar y controlar el sistema desde un navegador local, incluyendo gráficos dinámicos que muestran la evolución de temperatura y humedad en tiempo real.
+
++ **Diseño modular y expandible:**
+
+La utilización de la ESP32-S3, junto con protocolos I2C y pines digitales, facilita la expansión futura del proyecto (por ejemplo, añadiendo sensores adicionales o actuadores nuevos).
+
++ **Aprovechamiento eficiente de recursos:**
+
+Gracias al uso de materiales prestados del laboratorio, se logró reducir el gasto final a la mitad, lo que demuestra una buena gestión del presupuesto y la viabilidad del proyecto en entornos educativos o personales.
+
++ **Simplicidad en la implementación:**
+
+Pese a su funcionalidad avanzada, el proyecto se puede construir y programar con conocimientos básicos de electrónica y programación, lo que lo convierte en una excelente iniciativa para estudiantes.
 
