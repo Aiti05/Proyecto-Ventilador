@@ -29,7 +29,7 @@ Humidificador que pondremos sobre base de agua y a partir de ondas ultrasónicas
 Utilizados para avisar cuando se tiene que activar el humidificador y para cuando se activa el ventilador y asi verificar que no haya errores.
 
 + **Pulsadores:** 
-Pulsadores para activar manualmente el  el ventilador y/o el humidificador.
+Pulsadores para activar manualmente el ventilador y/o el humidificador.
 
 + **Cables:** 
 Cables para realizar todas las conexiones entre el reto de componentes.
