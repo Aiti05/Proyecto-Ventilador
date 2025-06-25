@@ -20,7 +20,7 @@ Sensor I2C para captar temperatura y humedad.
 Pantalla donde proyectaremos la temperatura y la humedad que perciba el sensor.
 
 + **Relé:** 
-Utilizado para poder introducir más energía para el ventilador (12V) y el humidificador (5V).
+Utilizado para poder introducir más energía para el ventilador (12V).
 
 + **Himudificador:** 
 Humidificador que pondremos sobre base de agua y a partir de ondas ultrasónicas.
